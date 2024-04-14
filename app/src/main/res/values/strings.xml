@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Rick and Morty</string>
+    <string name="download_error">Error downloading data</string>
+    <string name="right_answer">Right answer</string>
+    <string name="search_icon">Search Icon</string>
+    <string name="clear_search_text">Clear Search Text</string>
+</resources>

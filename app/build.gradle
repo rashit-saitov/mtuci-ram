@@ -1,0 +1,89 @@
+plugins {
+    alias libs.plugins.android.application
+    alias libs.plugins.hilt.plugin
+    alias libs.plugins.kotlin.android
+    alias libs.plugins.kotlin.kapt
+}
+
+android {
+    namespace 'com.maasbodev.rickandmorty'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.maasbodev.rickandmorty"
+        minSdk 26
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.4.1'
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+            excludes += '/META-INF/LICENSE.md'
+            excludes += '/META-INF/LICENSE-notice.md'
+        }
+    }
+}
+
+dependencies {
+    implementation libs.android.hilt
+    implementation libs.android.navigation.compose
+    implementation libs.androidx.coreKtx
+    implementation libs.androidx.hilt.navigation
+    implementation libs.androidx.paging
+    implementation libs.androidx.paging.compose
+    implementation libs.androidx.paging.commons
+    implementation libs.arrow.core
+    implementation libs.arrow.fx.coroutines
+    implementation libs.bundles.compose
+    implementation libs.bundles.networking
+    implementation libs.coil.kt
+    implementation libs.compose.activity
+    implementation libs.compose.material
+    implementation libs.compose.material3
+    implementation libs.kotlin.coroutines.test
+    implementation libs.lifecycle.runtime
+    implementation libs.lifecycle.viewmodel
+    implementation libs.mockk.mockk
+    implementation libs.mockk.android
+    implementation libs.moshi.moshi
+    implementation libs.room.paging
+    implementation libs.room.ktx
+    kapt libs.android.hilt.compiler
+    kapt libs.moshi.codegen
+    kapt libs.room.compiler
+
+    testImplementation libs.junit
+    testImplementation libs.room.testing
+    androidTestImplementation libs.android.navigation.test
+    androidTestImplementation libs.android.test.compose
+    androidTestImplementation libs.android.test.espresso
+    androidTestImplementation libs.android.test.junit
+    debugImplementation libs.compose.ui.test.manifest
+    debugImplementation libs.compose.ui.tooling.test
+}
