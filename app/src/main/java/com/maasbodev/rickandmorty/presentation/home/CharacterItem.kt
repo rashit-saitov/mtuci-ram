@@ -33,13 +33,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ScaffoldState
-import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import androidx.compose.material.AlertDialog
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.window.DialogProperties
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,8 +50,8 @@ fun CharacterItem(
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     modifier: Modifier = Modifier,
 ) {
-    val scope = rememberCoroutineScope()
-
+    val showDialog = remember { mutableStateOf(false) }
+    val dialogMessage = remember { mutableStateOf("") }
     Card(
         modifier = modifier,
         elevation = CardDefaults.cardElevation(s4),
@@ -100,12 +100,8 @@ fun CharacterItem(
                             detailViewModel.findById(character.id)
                             navToDetail(navController, DETAIL_SCREEN)
                         } else {
-                            scope.launch {
-                                scaffoldState.snackbarHostState.showSnackbar(
-                                    message = "Character is not dead",
-                                    duration = SnackbarDuration.Short
-                                )
-                            }
+                            dialogMessage.value = "Character is not dead"
+                            showDialog.value = true
                         }
                     },
                         modifier = Modifier
@@ -122,12 +118,8 @@ fun CharacterItem(
                             detailViewModel.findById(character.id)
                             navToDetail(navController, DETAIL_SCREEN)
                         } else {
-                            scope.launch {
-                                scaffoldState.snackbarHostState.showSnackbar(
-                                    message = "Character is not alive",
-                                    duration = SnackbarDuration.Short
-                                )
-                            }
+                            dialogMessage.value = "Character is not alive"
+                            showDialog.value = true
                         }
                     },
                         modifier = Modifier
@@ -137,6 +129,21 @@ fun CharacterItem(
                         colors = ButtonDefaults.buttonColors(backgroundColor = Color.Green)
                     ) {
                         Text("Alive", fontSize = 25.sp)
+                    }
+                    if (showDialog.value) {
+                        AlertDialog(
+                            onDismissRequest = { showDialog.value = false },
+                            title = { Text("Status Information") },
+                            text = { Text(dialogMessage.value) },
+                            confirmButton = {
+                                Button(
+                                    onClick = { showDialog.value = false }
+                                ) {
+                                    Text("OK")
+                                }
+                            },
+                            properties = DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = true)
+                        )
                     }
                 }
             }
