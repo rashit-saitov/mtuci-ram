@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace 'com.maasbodev.rickandmorty'
+    namespace 'com.rmsaitov.rickandmorty'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.maasbodev.rickandmorty"
+        applicationId "com.rmsaitov.rickandmorty"
         minSdk 26
         targetSdk 33
         versionCode 1
